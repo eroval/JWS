@@ -1,0 +1,15 @@
+version: '2'
+services:
+    jws-server:
+        container_name: cscb869
+        build:
+            context: cscb869
+            dockerfile: Dockerfile
+        image: cscb869:latest
+        ports:
+            - 8080:8080
+        networks:
+            - spring-cloud-network
+networks:
+    spring-cloud-network:
+        driver: bridge
