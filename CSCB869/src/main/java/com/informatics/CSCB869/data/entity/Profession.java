@@ -14,8 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Where(clause = "deleted = 0")
-@Table(name = "school")
+@Table(name = "profession")
 public class Profession extends BaseEntity {
     private String name;
 }

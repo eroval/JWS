@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>School Management</title>
+    <meta charset="UTF-8">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<header th:fragment="header">
+    <h1>Hospital Management System</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navigation">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/professions">List of Professions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/professions/create">Create Profession</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<footer page-footer font-small>
+    <div class="footer-copyright text-center py-3">© 2022 Copyright:
+        <a href="#">Hospital Management System</a>
+    </div>
+</footer>
+
+</html>

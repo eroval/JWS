@@ -1,2 +1,2 @@
-docker compose down --rmi all
+docker compose down
 docker compose up
