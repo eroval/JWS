@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/")
-public class IndexController {
+public class HomeController {
     
     @GetMapping
-    public String getIndex(Model model){
-        model.addAttribute("welcome", "Welcome");
-        return "index";
+    public String getHome(){
+        return "home.html";
     }
 }
