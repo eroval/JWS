@@ -5,14 +5,18 @@ services:
         container_name: cscb869
         build:
             context: cscb869
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile_Debug
         image: cscb869:latest
         ports:
             - 8080:8080
             - 5005:5005
         networks:
             - spring-cloud-network
+        volumes: 
+            - ./CSCB869:/app
+
 
 networks:
     spring-cloud-network:
         driver: bridge
+

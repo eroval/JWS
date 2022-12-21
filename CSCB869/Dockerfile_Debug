@@ -1,0 +1,5 @@
+FROM gradle:7.5.0-jdk17 AS build
+COPY --chown=gradle:gradle . /app
+WORKDIR /app
+EXPOSE 8080 5005
+ENTRYPOINT [ "gradle", "build -x test", "--continuous" ]
