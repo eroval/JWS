@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<h4>Professions:</h4>
+<div class="col-6">
+    <h3 th:unless="${professions} and ${professions.size()}">Empty</h3>
+    <table th:if="${professions.size()>0}" class="table table-hover">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Delete</th>
+        <tr th:each="profession : ${professions}">
+            <td th:text="${profession.id}"></td>
+            <td th:text="${profession.name}"></td>
+            <td><a class="btn btn-danger" th:href="@{'/profession/delete/'+${profession.id}}">Delete</a></td>
+        </tr>
+    </table>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

@@ -23,4 +23,16 @@ public class ProfessionController {
         model.addAttribute("professions", professions);
         return "/professions/professions.html";
     }
+
+    @GetMapping("/create-form")
+    public String createForm(Model model){
+        model.addAttribute("profession", new Profession());
+        return "/professions/create-profession.html";
+    }
+
+    @PostMapping("/create")
+    public String createProfession(@ModelAttribute Profession profession) {
+        professionService.createProfession(profession);
+        return "redirect:/professions";
+    }
 }
