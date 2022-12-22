@@ -1,4 +1,5 @@
 version: '2'
+
 services:
     jws-server:
         container_name: cscb869
@@ -8,8 +9,10 @@ services:
         image: cscb869:latest
         ports:
             - 8080:8080
+            - 5005:5005
         networks:
             - spring-cloud-network
+
 networks:
     spring-cloud-network:
         driver: bridge
