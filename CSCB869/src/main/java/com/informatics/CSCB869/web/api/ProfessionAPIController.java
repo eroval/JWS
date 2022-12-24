@@ -1,6 +1,8 @@
-package com.informatics.CSCB869.controllers.api;
+package com.informatics.CSCB869.web.api;
 
 import com.informatics.CSCB869.data.entity.Profession;
+import com.informatics.CSCB869.dto.CreateProfessionDTO;
+import com.informatics.CSCB869.dto.ProfessionDTO;
 import com.informatics.CSCB869.services.ProfessionService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -20,32 +22,32 @@ public class ProfessionAPIController {
     private final ProfessionService professionService;
 
     @GetMapping
-    public List<Profession> getProfessions(){
+    public List<ProfessionDTO> getProfessions(){
         return professionService.getProfessions();
     }
 
     @RequestMapping("/professions/{id}")
-    public Profession getProfession(@PathVariable("id") long id){
+    public ProfessionDTO getProfession(@PathVariable("id") long id){
         return professionService.getProfession(id);
     }
 
     @RequestMapping("/professions/{name}")
-    public Profession getProfession(@PathVariable("name") String name){
+    public ProfessionDTO getProfession(@PathVariable("name") String name){
         return professionService.getProfession(name);
     }
 
     @PostMapping
-    public Profession createProfession(@RequestBody Profession profession){
-        return professionService.createProfession(profession);
+    public Profession create(@RequestBody CreateProfessionDTO profession){
+        return professionService.create(profession);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-    public Profession updateProfession(@PathVariable("id") long id, @RequestBody Profession profession) {
-        return professionService.updateProfession(id, profession);
+    public Profession update(@PathVariable("id") long id, @RequestBody CreateProfessionDTO profession) {
+        return professionService.update(id, profession);
     }
     
     @DeleteMapping(value="/{id}")
-    public void deleteProfession(@PathVariable("id") long id){
-        professionService.deleteProfession(id);
+    public void delete(@PathVariable("id") long id){
+        professionService.delete(id);
     }
 }

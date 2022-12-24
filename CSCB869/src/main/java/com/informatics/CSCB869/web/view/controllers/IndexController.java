@@ -1,4 +1,4 @@
-package com.informatics.CSCB869.controllers.view;
+package com.informatics.CSCB869.web.view.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
