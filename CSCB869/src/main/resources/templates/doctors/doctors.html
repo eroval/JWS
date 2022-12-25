@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${pageOfDoctors} and ${pageOfDoctors.content.size}">There are no doctors!</h3>
+    <table th:if="${pageOfDoctors.content.size>0}" class="table table-hover">
+        <th>Id</th>
+        <th>Doctor Name</th>
+        <th>Profession Id</th>
+        <th></th>
+        <th></th>
+        <tr th:each="doctor : ${pageOfDoctors.content}">
+            <td th:text="${doctor.id}"></td>
+            <td th:text="${doctor.name}"></td>
+            <td th:text="${doctor.professionId}"></td>
+            <td><a class="custom-btn" th:href="@{/doctors/{page}/10/edit/{id}(page=${currentPage}, id=${doctor.id})}">Edit</a></td>
+            <td th:if="${pageOfDoctors.content.size>1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage}, id=${doctor.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctors.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage-1}, id=${doctor.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctors.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=1, id=${doctor.id})}">Delete</a></td>
+        </tr>
+    </table>
+    <span th:if="${pageOfDoctors.totalPages > 0}"
+         th:each="pageNumber : ${pageNumbers}" >
+        <a th:href="@{/doctors/{page}/{size}(page=${pageNumber}, size=${pageOfDoctors.size})}" th:text="${pageNumber}">
+           </a>
+    </span>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

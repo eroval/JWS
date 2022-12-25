@@ -3,19 +3,27 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <header th:replace="fragments :: header"></header>
-<h4>Professions:</h4>
-<div class="col-6">
-    <h3 th:unless="${professions} and ${professions.size()}">Empty</h3>
-    <table th:if="${professions.size()>0}" class="table table-hover">
+<div class="container justify-content-center">
+    <h3 th:unless="${pageOfProfessions} and ${pageOfProfessions.content.size}">There are no professions!</h3>
+    <table th:if="${pageOfProfessions.content.size>0}" class="table table-hover">
         <th>Id</th>
-        <th>Name</th>
-        <th>Delete</th>
-        <tr th:each="profession : ${professions}">
+        <th>Profession Name</th>
+        <th></th>
+        <th></th>
+        <tr th:each="profession : ${pageOfProfessions.content}">
             <td th:text="${profession.id}"></td>
             <td th:text="${profession.name}"></td>
-            <td><a class="btn btn-danger" th:href="@{'/profession/delete/'+${profession.id}}">Delete</a></td>
+            <td><a class="custom-btn" th:href="@{/professions/{page}/10/edit/{id}(page=${currentPage}, id=${profession.id})}">Edit</a></td>
+            <td th:if="${pageOfProfessions.content.size>1}" ><a class="custom-btn" th:href="@{/professions/{page}/10/delete/{id}(page=${currentPage}, id=${profession.id})}">Delete</a></td>
+            <td th:if="${pageOfProfessions.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/professions/{page}/10/delete/{id}(page=${currentPage-1}, id=${profession.id})}">Delete</a></td>
+            <td th:if="${pageOfProfessions.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/professions/{page}/10/delete/{id}(page=1, id=${profession.id})}">Delete</a></td>
         </tr>
     </table>
+    <span th:if="${pageOfProfessions.totalPages > 0}"
+         th:each="pageNumber : ${pageNumbers}" >
+        <a th:href="@{/professions/{page}/{size}(page=${pageNumber}, size=${pageOfProfessions.size})}" th:text="${pageNumber}">
+           </a>
+    </span>
 </div>
 <footer th:replace="fragments :: footer"></footer>
 </body>
