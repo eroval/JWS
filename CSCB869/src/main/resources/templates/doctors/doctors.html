@@ -8,7 +8,7 @@
     <table th:if="${pageOfDoctors.content.size>0}" class="table table-hover">
         <th>Id</th>
         <th>Doctor Name</th>
-        <th>Profession</th>
+        <th>Profession Id</th>
         <th></th>
         <th></th>
         <tr th:each="doctor : ${pageOfDoctors.content}">
@@ -16,9 +16,9 @@
             <td th:text="${doctor.name}"></td>
             <td th:text="${doctor.professionId}"></td>
             <td><a class="custom-btn" th:href="@{/doctors/{page}/10/edit/{id}(page=${currentPage}, id=${doctor.id})}">Edit</a></td>
-            <td><a class="custom-btn" th:if="${pageOfDoctors.content.size>1}" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage}, id=${doctor.id})}">Delete</a></td>
-            <td><a class="custom-btn" th:if="${pageOfDoctors.content.size<2} and ${currentPage!=1}" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage-1}, id=${doctor.id})}">Delete</a></td>
-            <td><a class="custom-btn" th:if="${pageOfDoctors.content.size<2} and ${currentPage==1}" th:href="@{/doctors/{page}/10/delete/{id}(page=1, id=${doctor.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctors.content.size>1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage}, id=${doctor.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctors.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage-1}, id=${doctor.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctors.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=1, id=${doctor.id})}">Delete</a></td>
         </tr>
     </table>
     <span th:if="${pageOfDoctors.totalPages > 0}"

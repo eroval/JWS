@@ -8,6 +8,7 @@
         <form action="#" th:action="@{/doctors/create}" th:object="${doctor}" method="post">
             <div class="form-group">
                 <input class="form-control" type="text" th:field="*{name}" placeholder="Name" id="name">
+                <br>
                 <input class="form-control" type="text" th:field="*{professionId}" placeholder="Profession Id" id="professionId">
             </div>
             <button type="submit" class="custom-btn">Create Doctor</button>

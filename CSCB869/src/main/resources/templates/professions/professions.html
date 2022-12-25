@@ -14,9 +14,9 @@
             <td th:text="${profession.id}"></td>
             <td th:text="${profession.name}"></td>
             <td><a class="custom-btn" th:href="@{/professions/{page}/10/edit/{id}(page=${currentPage}, id=${profession.id})}">Edit</a></td>
-            <td><a class="custom-btn" th:if="${pageOfProfessions.content.size>1}" th:href="@{/professions/{page}/10/delete/{id}(page=${currentPage}, id=${profession.id})}">Delete</a></td>
-            <td><a class="custom-btn" th:if="${pageOfProfessions.content.size<2} and ${currentPage!=1}" th:href="@{/professions/{page}/10/delete/{id}(page=${currentPage-1}, id=${profession.id})}">Delete</a></td>
-            <td><a class="custom-btn" th:if="${pageOfProfessions.content.size<2} and ${currentPage==1}" th:href="@{/professions/{page}/10/delete/{id}(page=1, id=${profession.id})}">Delete</a></td>
+            <td th:if="${pageOfProfessions.content.size>1}" ><a class="custom-btn" th:href="@{/professions/{page}/10/delete/{id}(page=${currentPage}, id=${profession.id})}">Delete</a></td>
+            <td th:if="${pageOfProfessions.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/professions/{page}/10/delete/{id}(page=${currentPage-1}, id=${profession.id})}">Delete</a></td>
+            <td th:if="${pageOfProfessions.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/professions/{page}/10/delete/{id}(page=1, id=${profession.id})}">Delete</a></td>
         </tr>
     </table>
     <span th:if="${pageOfProfessions.totalPages > 0}"
