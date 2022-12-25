@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DoctorServiceImpl implements DoctorService{
     private final DoctorRepository doctorRepository;
-    private final ProfessionRepository professionRepository;
     private final ModelMapper modelMapper;
 
     @Override 
@@ -85,6 +84,7 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     private DoctorDTO convertToDoctorDTO(Doctor doctor) {
+
         return modelMapper.map(doctor, DoctorDTO.class);
     }
 }

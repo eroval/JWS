@@ -10,5 +10,5 @@ import lombok.*;
 public class DoctorDTO {
     private long id;
     private String name;
-    private String professionName;
+    private long professionId;
 }

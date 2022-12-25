@@ -9,6 +9,7 @@
         <th>Id</th>
         <th>Profession Name</th>
         <th></th>
+        <th></th>
         <tr th:each="profession : ${pageOfProfessions.content}">
             <td th:text="${profession.id}"></td>
             <td th:text="${profession.name}"></td>
