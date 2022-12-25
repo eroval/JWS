@@ -5,11 +5,11 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h4>New Profession</h4>
-        <form action="#" th:action="@{/professions/create}" th:object="${profession}" method="post">
+        <form action="#" th:action="@{/professions/{page}/{size}/update/{id} (page=${page}, size=${size} ,id=${id})}" th:object="${profession}" method="post">
             <div class="form-group">
                 <input class="form-control" type="text" th:field="*{name}" placeholder="Name" id="name">
             </div>
-            <button type="submit" class="custom-btn">Create Profession</button>
+            <button type="submit" class="custom-btn">Update Profession</button>
         </form>
 </div>
 <footer th:replace="fragments :: footer"></footer>

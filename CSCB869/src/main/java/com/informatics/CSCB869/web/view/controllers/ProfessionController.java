@@ -1,8 +1,10 @@
 package com.informatics.CSCB869.web.view.controllers;
 
 import com.informatics.CSCB869.data.entity.Profession;
+import com.informatics.CSCB869.data.repository.ProfessionRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.ProfessionService;
+import com.informatics.CSCB869.web.view.model.CreateProfessionViewModel;
 import com.informatics.CSCB869.web.view.model.ProfessionViewModel;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Type;
 import org.modelmapper.TypeToken;
@@ -19,6 +22,8 @@ import org.modelmapper.TypeToken;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
@@ -81,6 +86,22 @@ public class ProfessionController {
         return "redirect:/professions/" + page + "/" + size;
     }
 
+    @GetMapping("/{page}/{size}/edit/{id}")
+    public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        model.addAttribute("profession", modelMapper.map(professionService.getProfession(id),
+        CreateProfessionViewModel.class));
+        return "/professions/edit-profession";
+    }
+
+    @PostMapping("/{page}/{size}/update/{id}")
+    public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
+    @Valid @ModelAttribute("profession") CreateProfessionViewModel profession, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/professions/"+page+"/"+size+"/update/"+id;
+        }
+        professionService.update(id, modelMapper.map(profession,CreateProfessionDTO.class));
+        return "redirect:/professions/"+page+"/"+size;
+    }
     
     private ProfessionViewModel convertToProfessionViewModel(ProfessionDTO profession) {
         return modelMapper.map(profession, ProfessionViewModel.class);
