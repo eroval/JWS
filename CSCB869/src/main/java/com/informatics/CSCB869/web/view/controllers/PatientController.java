@@ -1,11 +1,11 @@
 package com.informatics.CSCB869.web.view.controllers;
 
-import com.informatics.CSCB869.data.entity.Doctor;
-import com.informatics.CSCB869.data.repository.DoctorRepository;
+import com.informatics.CSCB869.data.entity.Patient;
+import com.informatics.CSCB869.data.repository.PatientRepository;
 import com.informatics.CSCB869.dto.*;
-import com.informatics.CSCB869.services.DoctorService;
-import com.informatics.CSCB869.web.view.model.CreateDoctorViewModel;
-import com.informatics.CSCB869.web.view.model.DoctorViewModel;
+import com.informatics.CSCB869.services.PatientService;
+import com.informatics.CSCB869.web.view.model.CreatePatientViewModel;
+import com.informatics.CSCB869.web.view.model.PatientViewModel;
 
 import lombok.AllArgsConstructor;
 
@@ -27,20 +27,20 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/doctors")
-public class DoctorController {
+@RequestMapping("/patients")
+public class PatientController {
     
-    private DoctorService doctorService;
+    private PatientService patientService;
     private final ModelMapper modelMapper;
 
     @GetMapping ("/{page}/{size}")
-    public String getDoctors(Model model, @PathVariable int page, @PathVariable int size){
-        Type pageType = new TypeToken<Page<DoctorViewModel>>() {}.getType();
-        final Page<DoctorViewModel> pageOfDoctors =
-                modelMapper.map(doctorService.getDoctorsPagination(PageRequest.of(page - 1, size)), pageType);
+    public String getPatients(Model model, @PathVariable int page, @PathVariable int size){
+        Type pageType = new TypeToken<Page<PatientViewModel>>() {}.getType();
+        final Page<PatientViewModel> pageOfPatients =
+                modelMapper.map(patientService.getPatientsPagination(PageRequest.of(page - 1, size)), pageType);
 
-        model.addAttribute("pageOfDoctors", pageOfDoctors);
-        int totalPages = pageOfDoctors.getTotalPages();
+        model.addAttribute("pageOfPatients", pageOfPatients);
+        int totalPages = pageOfPatients.getTotalPages();
         if (totalPages>0){
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
@@ -48,58 +48,58 @@ public class DoctorController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
         model.addAttribute("currentPage", page);
-        return "/doctors/doctors";
+        return "/patients/patients";
     }
 
 
     @GetMapping("/create-form")
     public String createForm(Model model){
-        model.addAttribute("doctor", new DoctorViewModel());
-        return "/doctors/create-doctor.html";
+        model.addAttribute("patient", new PatientViewModel());
+        return "/patients/create-patient.html";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute CreateDoctorDTO doctor) {
+    public String create(@ModelAttribute CreatePatientDTO patient) {
         try{
-            doctorService.create(doctor);
+            patientService.create(patient);
         }
         catch (Exception e){
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        return "redirect:/doctors/1/10";
+        return "redirect:/patients/1/10";
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
     public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id) {
-        doctorService.delete(id);
-        return "redirect:/doctors/" + page + "/" + size;
+        patientService.delete(id);
+        return "redirect:/patients/" + page + "/" + size;
     }
 
     @GetMapping("/{page}/{size}/edit/{id}")
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
-        model.addAttribute("doctor", modelMapper.map(doctorService.getDoctor(id),
-        CreateDoctorViewModel.class));
-        return "/doctors/edit-doctor";
+        model.addAttribute("patient", modelMapper.map(patientService.getPatient(id),
+        CreatePatientViewModel.class));
+        return "/patients/edit-patient";
     }
 
     @PostMapping("/{page}/{size}/update/{id}")
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
-    @Valid @ModelAttribute("doctor") CreateDoctorViewModel doctor, BindingResult bindingResult) {
+    @Valid @ModelAttribute("patient") CreatePatientViewModel patient, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/doctors/"+page+"/"+size+"/update/"+id;
+            return "redirect:/patients/"+page+"/"+size+"/update/"+id;
         }
         try{
-            doctorService.update(id, modelMapper.map(doctor,CreateDoctorDTO.class));
+            patientService.update(id, modelMapper.map(patient,CreatePatientDTO.class));
         }
         catch (Exception e){
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        return "redirect:/doctors/"+page+"/"+size;
+        return "redirect:/patients/"+page+"/"+size;
     }
     
-    private DoctorViewModel convertToDoctorViewModel(DoctorDTO doctor) {
-        return modelMapper.map(doctor, DoctorViewModel.class);
+    private PatientViewModel convertToPatientViewModel(PatientDTO patient) {
+        return modelMapper.map(patient, PatientViewModel.class);
     }
 }

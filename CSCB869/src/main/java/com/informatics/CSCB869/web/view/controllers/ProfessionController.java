@@ -99,7 +99,13 @@ public class ProfessionController {
         if (bindingResult.hasErrors()) {
             return "redirect:/professions/"+page+"/"+size+"/update/"+id;
         }
-        professionService.update(id, modelMapper.map(profession,CreateProfessionDTO.class));
+        try{
+            professionService.update(id, modelMapper.map(profession,CreateProfessionDTO.class));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
         return "redirect:/professions/"+page+"/"+size;
     }
     

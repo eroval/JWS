@@ -6,10 +6,10 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateDoctorViewModel {
+public class CreatePatientViewModel {
     @NotBlank
     @Size(min=1, max=50, message="Min 1, Max 50")
     private String name;
 
-    private long professionId;
+    private String egn;
 }
