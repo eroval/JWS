@@ -1,5 +1,7 @@
 package com.informatics.CSCB869.dto;
 
+import com.informatics.CSCB869.data.entity.Profession;
+
 import lombok.*;
 
 @Getter
@@ -9,5 +11,5 @@ import lombok.*;
 
 public class CreateDoctorDTO {
     private String name;
-    private long professionId;
+    private Profession profession;
 }

@@ -1,6 +1,9 @@
 package com.informatics.CSCB869.web.view.model;
 
 import javax.validation.constraints.*;
+
+import com.informatics.CSCB869.data.entity.Profession;
+
 import lombok.*;
 
 @Getter
@@ -11,5 +14,6 @@ public class CreateDoctorViewModel {
     @Size(min=1, max=50, message="Min 1, Max 50")
     private String name;
 
-    private long professionId;
+    @NotNull
+    private Profession profession;
 }

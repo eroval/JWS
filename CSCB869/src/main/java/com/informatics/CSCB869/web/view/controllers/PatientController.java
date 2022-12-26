@@ -59,14 +59,13 @@ public class PatientController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute CreatePatientDTO patient) {
-        try{
-            patientService.create(patient);
+    public String create(@Valid @ModelAttribute("patient") CreatePatientViewModel patient,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("patient", new CreatePatientViewModel());
+            return "/patients/create-patient.html";
         }
-        catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+        patientService.create(modelMapper.map(patient, CreatePatientDTO.class));
         return "redirect:/patients/1/10";
     }
 
@@ -87,7 +86,7 @@ public class PatientController {
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
     @Valid @ModelAttribute("patient") CreatePatientViewModel patient, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/patients/"+page+"/"+size+"/update/"+id;
+            return "redirect:/patients/"+page+"/"+size+"/edit/"+id;
         }
         try{
             patientService.update(id, modelMapper.map(patient,CreatePatientDTO.class));

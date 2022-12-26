@@ -4,6 +4,7 @@ import com.informatics.CSCB869.data.entity.Doctor;
 import com.informatics.CSCB869.data.repository.DoctorRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.DoctorService;
+import com.informatics.CSCB869.services.ProfessionService;
 import com.informatics.CSCB869.web.view.model.CreateDoctorViewModel;
 import com.informatics.CSCB869.web.view.model.DoctorViewModel;
 
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 public class DoctorController {
     
     private DoctorService doctorService;
+    private ProfessionService professionService;
     private final ModelMapper modelMapper;
 
     @GetMapping ("/{page}/{size}")
@@ -54,19 +56,20 @@ public class DoctorController {
 
     @GetMapping("/create-form")
     public String createForm(Model model){
-        model.addAttribute("doctor", new DoctorViewModel());
+        model.addAttribute("doctor", new CreateDoctorViewModel());
+        model.addAttribute("professions", professionService.getProfessions());
         return "/doctors/create-doctor.html";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute CreateDoctorDTO doctor) {
-        try{
-            doctorService.create(doctor);
+    public String create(@Valid @ModelAttribute("doctor") CreateDoctorViewModel doctor,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("doctor", new CreateDoctorViewModel());
+            model.addAttribute("professions", professionService.getProfessions());
+            return "/doctors/create-doctor.html";
         }
-        catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+        doctorService.create(modelMapper.map(doctor, CreateDoctorDTO.class));
         return "redirect:/doctors/1/10";
     }
 
@@ -80,6 +83,7 @@ public class DoctorController {
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
         model.addAttribute("doctor", modelMapper.map(doctorService.getDoctor(id),
         CreateDoctorViewModel.class));
+        model.addAttribute("professions", professionService.getProfessions());
         return "/doctors/edit-doctor";
     }
 
@@ -87,7 +91,7 @@ public class DoctorController {
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
     @Valid @ModelAttribute("doctor") CreateDoctorViewModel doctor, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/doctors/"+page+"/"+size+"/update/"+id;
+            return "redirect:/doctors/"+page+"/"+size+"/edit/"+id;
         }
         try{
             doctorService.update(id, modelMapper.map(doctor,CreateDoctorDTO.class));

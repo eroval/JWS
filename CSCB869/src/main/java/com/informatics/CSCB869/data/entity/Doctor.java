@@ -1,5 +1,6 @@
 package com.informatics.CSCB869.data.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,7 @@ public class Doctor extends BaseEntity{
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="profession_id")
+    @NotNull
+    @JoinColumn(name="profession_id", referencedColumnName = "id")
     private Profession profession;
 }

@@ -33,16 +33,6 @@ public class ProfessionController {
     private ProfessionService professionService;
     private final ModelMapper modelMapper;
 
-    // @GetMapping
-    // public String getProfessions(Model model){
-    //     final List<ProfessionViewModel> professions = professionService.getProfessions()
-    //             .stream()
-    //             .map(this::convertToProfessionViewModel)
-    //             .collect(Collectors.toList());
-    //     model.addAttribute("professions", professions);
-    //     return "/professions/professions.html";
-    // }
-
     @GetMapping ("/{page}/{size}")
     public String getProfessions(Model model, @PathVariable int page, @PathVariable int size){
         Type pageType = new TypeToken<Page<ProfessionViewModel>>() {}.getType();
@@ -67,16 +57,15 @@ public class ProfessionController {
         model.addAttribute("profession", new ProfessionViewModel());
         return "/professions/create-profession.html";
     }
-
+    
     @PostMapping("/create")
-    public String create(@ModelAttribute CreateProfessionDTO profession) {
-        try{
-            professionService.create(profession);
+    public String create(@Valid @ModelAttribute("profession") CreateProfessionViewModel profession,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("profession", new CreateProfessionViewModel());
+            return "/professions/create-profession.html";
         }
-        catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+        professionService.create(modelMapper.map(profession, CreateProfessionDTO.class));
         return "redirect:/professions/1/10";
     }
 
@@ -97,7 +86,7 @@ public class ProfessionController {
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
     @Valid @ModelAttribute("profession") CreateProfessionViewModel profession, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/professions/"+page+"/"+size+"/update/"+id;
+            return "redirect:/professions/"+page+"/"+size+"/edit/"+id;
         }
         try{
             professionService.update(id, modelMapper.map(profession,CreateProfessionDTO.class));
