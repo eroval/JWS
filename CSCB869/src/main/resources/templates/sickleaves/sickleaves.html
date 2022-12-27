@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${pageOfSickleaves} and ${pageOfSickleaves.content.size}">There are no sickleaves!</h3>
+    <table th:if="${pageOfSickleaves.content.size>0}" class="table table-hover">
+        <th>Id</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Patient Id</th>
+        <th></th>
+        <th></th>
+        <tr th:each="sickleave : ${pageOfSickleaves.content}">
+            <td th:text="${sickleave.id}"></td>
+            <td th:text="${sickleave.startDate}"></td>
+            <td th:text="${sickleave.endDate}"></td>
+            <td th:text="${sickleave.patient.id}"></td>
+            <td><a class="custom-btn" th:href="@{/sickleaves/{page}/10/edit/{id}(page=${currentPage}, id=${sickleave.id})}">Edit</a></td>
+            <td th:if="${pageOfSickleaves.content.size>1}"><a class="custom-btn" th:href="@{/sickleaves/{page}/10/delete/{id}(page=${currentPage}, id=${sickleave.id})}">Delete</a></td>
+            <td th:if="${pageOfSickleaves.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/sickleaves/{page}/10/delete/{id}(page=${currentPage-1}, id=${sickleave.id})}">Delete</a></td>
+            <td th:if="${pageOfSickleaves.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/sickleaves/{page}/10/delete/{id}(page=1, id=${sickleave.id})}">Delete</a></td>
+        </tr>
+    </table>
+    <span th:if="${pageOfSickleaves.totalPages > 0}"
+         th:each="pageNumber : ${pageNumbers}" >
+        <a th:href="@{/sickleaves/{page}/{size}(page=${pageNumber}, size=${pageOfSickleaves.size})}" th:text="${pageNumber}">
+           </a>
+    </span>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

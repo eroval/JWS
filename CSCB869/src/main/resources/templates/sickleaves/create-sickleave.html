@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h4>New Sick Leave</h4>
+        <form action="#" th:action="@{/sick-leave/create}" th:object="${sickleave}" method="post">
+            <div class="form-group">
+                <input class="form-control" type="text" th:field="*{startDate}" placeholder="ex: 2022-12-31" id="startDate">
+                <br>
+                <input class="form-control" type="text" th:field="*{endDate}" placeholder="ex: 2022-12-31" id="endDate">
+                <br> 
+                <select class="form-control" th:field="${sickleave.patient}" id="patient">
+                    <option value="">Select patient</option>
+                    <option th:each="patient : ${patients}" th:value="${patient.id}"
+                            th:text="${patient.egn}"></option>
+                </select>
+            </div>
+            <button type="submit" class="custom-btn">Create Sick Leave</button>
+        </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

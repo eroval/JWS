@@ -88,7 +88,7 @@ public class DoctorController {
     }
 
     @PostMapping("/{page}/{size}/update/{id}")
-    public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
+    public String update (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
     @Valid @ModelAttribute("doctor") CreateDoctorViewModel doctor, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/doctors/"+page+"/"+size+"/edit/"+id;

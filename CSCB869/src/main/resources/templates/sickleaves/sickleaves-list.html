@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${sickleaves} and ${sickleaves.size()}">There are no sickleaves!</h3>
+    <table th:if="${sickleaves.size()>0}" class="table table-hover">
+        <th>Id</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Patient Id</th>
+        <th></th>
+        <th></th>
+        <tr th:each="sickleave : ${sickleaves}">
+            <td th:text="${sickleave.id}"></td>
+            <td th:text="${sickleave.startDate}"></td>
+            <td th:text="${sickleave.endDate}"></td>
+            <td th:text="${sickleave.patient.id}"></td>
+            <td><a class="custom-btn" th:href="@{'/sickleaves/edit-sickleave/'+${sickleave.id}}">Edit</a></td>
+            <td><a class="custom-btn" th:href="@{'/sickleaves/delete/'+${sickleave.id}}">Delete</a></td>
+        </tr>
+    </table>
+    </div>
+    <footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

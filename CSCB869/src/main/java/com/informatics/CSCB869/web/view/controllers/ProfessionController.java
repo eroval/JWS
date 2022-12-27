@@ -83,7 +83,7 @@ public class ProfessionController {
     }
 
     @PostMapping("/{page}/{size}/update/{id}")
-    public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
+    public String update (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
     @Valid @ModelAttribute("profession") CreateProfessionViewModel profession, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/professions/"+page+"/"+size+"/edit/"+id;
