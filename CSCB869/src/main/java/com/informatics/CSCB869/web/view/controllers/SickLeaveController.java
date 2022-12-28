@@ -83,7 +83,8 @@ public class SickLeaveController {
     public String create(@Valid @ModelAttribute("sickleave") CreateSickLeaveViewModel sickleave,
                                 BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors() || (sickleave.getEndDate().compareTo(sickleave.getStartDate())<0)) {
-            model.addAttribute("sickleave", new CreateSickLeaveViewModel());
+            model.addAttribute("sickleave", new SickLeaveViewModel());
+            model.addAttribute("patients", patientService.getPatients());
             return "/sickleaves/create-sickleave.html";
         }
         sickLeaveService.create(modelMapper.map(sickleave, CreateSickLeaveDTO.class));
@@ -100,6 +101,7 @@ public class SickLeaveController {
     public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
         model.addAttribute("sickleave", modelMapper.map(sickLeaveService.getSickLeave(id),
         CreateSickLeaveViewModel.class));
+        model.addAttribute("patients", patientService.getPatients());
         return "/sickleaves/edit-sickleave";
     }
 
