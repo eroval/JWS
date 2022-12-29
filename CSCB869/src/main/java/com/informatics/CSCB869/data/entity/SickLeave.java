@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 @Entity
-@Table(name="sickLeave")
+@Table(name="sick_leave")
 public class SickLeave extends BaseEntity {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")

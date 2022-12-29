@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h4>New Visit</h4>
+        <form action="#" th:action="@{/visits/create}" th:object="${visit}" method="post">
+            <div class="form-group">
+                <input class="form-control" type="text" th:field="*{date}" placeholder="ex: 2022-12-31" id="date">
+                <br>
+                <select class="form-control" th:field="${visit.doctor}" id="doctor">
+                    <option value="">Select doctor</option>
+                    <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
+                            th:text="${doctor.name}"></option>
+                </select>
+                <br>
+                <select class="form-control" th:field="${visit.patient}" id="patient">
+                    <option value="">Select patient</option>
+                    <option th:each="patient : ${patients}" th:value="${patient.id}"
+                            th:text="${patient.name}"></option>
+                </select>
+            </div>
+            <button type="submit" class="custom-btn">Create Visit</button>
+        </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

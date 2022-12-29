@@ -1,7 +1,4 @@
 package com.informatics.CSCB869.web.view.controllers;
-
-import com.informatics.CSCB869.data.entity.Diagnose;
-import com.informatics.CSCB869.data.repository.DiagnoseRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.DiagnoseService;
 import com.informatics.CSCB869.web.view.model.CreateDiagnoseViewModel;

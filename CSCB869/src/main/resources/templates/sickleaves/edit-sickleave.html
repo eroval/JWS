@@ -5,7 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h4>Edit SickLeave</h4>
-        <form action="#" th:action="@{/sickleaves/{page}/{size}/update/{id} (page=${page}, size=${size} ,id=${id})}" th:object="${sickleave}" method="post">
+        <form action="#" th:action="@{/sick-leave/{page}/{size}/update/{id} (page=${page}, size=${size} ,id=${id})}" th:object="${sickleave}" method="post">
             <div class="form-group">
                 <input class="form-control" type="text" th:field="*{startDate}" placeholder="ex: 2022-12-31" id="startDate">
                 <br>

@@ -27,4 +27,7 @@ public class Doctor extends BaseEntity{
 
     @OneToMany
     private List<DoctorPatientGP> gp;
+
+    @OneToMany
+    private List<Visit> visits;
 }
