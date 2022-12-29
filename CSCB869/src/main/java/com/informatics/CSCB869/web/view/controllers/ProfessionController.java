@@ -75,8 +75,14 @@ public class ProfessionController {
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
-    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id) {
-        professionService.delete(id);
+    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        try{
+            professionService.delete(id);
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete profession.");
+            return "error-template";
+        }
         return "redirect:/professions/" + page + "/" + size;
     }
 

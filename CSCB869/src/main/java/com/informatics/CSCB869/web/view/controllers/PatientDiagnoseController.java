@@ -75,8 +75,14 @@ public class PatientDiagnoseController {
     }
 
     @GetMapping("/{page}/{size}/delete/{pId}-{dId}")
-    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long pId, @PathVariable Long dId) {
-        patientDiagnoseService.delete(pId, dId);
+    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long pId, @PathVariable Long dId, Model model) {
+        try{
+            patientDiagnoseService.delete(pId, dId);
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete assigned diagnose.");
+            return "error-template";
+        }
         return "redirect:/patientdiagnoses/" + page + "/" + size;
     }
     

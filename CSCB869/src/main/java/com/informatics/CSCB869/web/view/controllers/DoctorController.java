@@ -74,8 +74,14 @@ public class DoctorController {
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
-    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id) {
-        doctorService.delete(id);
+    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        try{
+            doctorService.delete(id);
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Cannot delete doctor when assigned as GP. Delete clients first.");
+            return "error-template";
+        }
         return "redirect:/doctors/" + page + "/" + size;
     }
 

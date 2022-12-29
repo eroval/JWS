@@ -80,8 +80,14 @@ public class DoctorPatientGPController {
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
-    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id) {
-        doctorpatientgpService.delete(id);
+    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        try{
+            doctorpatientgpService.delete(id);
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete GP.");
+            return "error-template";
+        }
         return "redirect:/doctorpatientgps/" + page + "/" + size;
     }
 
