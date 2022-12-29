@@ -4,7 +4,7 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
-    <h4>New GP for Patient</h4>
+    <h4>Assign Diagnose</h4>
         <form action="#" th:action="@{/patientdiagnoses/create}" th:object="${patientdiagnose}" method="post">
             <div class="form-group">
                 <select class="form-control" th:field="${patientdiagnose.patient}" id="patient">
