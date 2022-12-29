@@ -69,14 +69,19 @@ public class SickLeaveController {
     public String getSickLeaveByPatientId(Model model, @PathVariable long id){
         Optional<Patient> patient = patientRepository.findById(id);
         if(patient.isEmpty()){
-            return "redirect:/sick-leaves";
+            return "redirect:/patients/1/10";
         }
-        final List<SickLeaveViewModel> sickLeaves = sickLeaveService.getSickLeavesByPatient(patient.get())
-                .stream()
-                .map(this::convertToSickLeaveViewModel)
-                .collect(Collectors.toList());
-        model.addAttribute("sickleaves", sickLeaves);
-        return "/sickleaves/sickleaves-list";
+        try{
+            final List<SickLeaveViewModel> sickLeaves = sickLeaveService.getSickLeavesByPatient(patient.get())
+                    .stream()
+                    .map(this::convertToSickLeaveViewModel)
+                    .collect(Collectors.toList());
+            model.addAttribute("sickleaves", sickLeaves);
+            return "/sickleaves/sickleaves-list";
+        }
+        catch(Exception e){
+            return "redirect:/patients/1/10";
+        }
     }
     
     @PostMapping("/create")

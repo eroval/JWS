@@ -10,10 +10,6 @@ services:
             DB_DATABASE: ${DB_DATABASE}
             DB_USERNAME: ${DB_USERNAME}
             DB_PASSWORD: ${DB_PASSWORD}
-            # args:
-            #     - DB_DATABASE=${DB_DATABASE}
-            #     - DB_USERNAME=${DB_USERNAME}
-            #     - DB_PASSWORD=${DB_PASSWORD}
         image: cscb869:latest
         ports:
             - 8080:8080
@@ -35,7 +31,7 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'hospitaldb:/databases/cscb869/'
+            - 'hospitaldb:/var/lib/mysql'
         networks:
             - spring-cloud-network
         healthcheck:
@@ -45,7 +41,6 @@ services:
 
 volumes:
     hospitaldb:
-        driver: local
 
 networks:
     spring-cloud-network:

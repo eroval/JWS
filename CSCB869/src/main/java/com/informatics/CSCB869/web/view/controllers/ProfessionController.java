@@ -65,7 +65,12 @@ public class ProfessionController {
             model.addAttribute("profession", new CreateProfessionViewModel());
             return "/professions/create-profession.html";
         }
-        professionService.create(modelMapper.map(profession, CreateProfessionDTO.class));
+        try{
+            professionService.create(modelMapper.map(profession, CreateProfessionDTO.class));}
+        catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
         return "redirect:/professions/1/10";
     }
 

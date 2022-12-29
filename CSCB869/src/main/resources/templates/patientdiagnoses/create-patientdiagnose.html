@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h4>New GP for Patient</h4>
+        <form action="#" th:action="@{/patientdiagnoses/create}" th:object="${patientdiagnose}" method="post">
+            <div class="form-group">
+                <select class="form-control" th:field="${patientdiagnose.patient}" id="patient">
+                    <option value="">Select patient</option>
+                    <option th:each="patient : ${patients}" th:value="${patient.id}"
+                            th:text="${patient.egn}"></option>
+                </select>
+                <br> 
+                <select class="form-control" th:field="${patientdiagnose.diagnose}" id="diagnose">
+                    <option value="">Select diagnose</option>
+                    <option th:each="diagnose : ${diagnoses}" th:value="${diagnose.id}"
+                            th:text="${diagnose.id}"></option>
+                </select>
+            </div>
+            <button type="submit" class="custom-btn">Create</button>
+        </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

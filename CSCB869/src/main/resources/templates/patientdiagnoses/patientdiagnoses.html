@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${pageOfPatientdiagnoses} and ${pageOfPatientdiagnoses.content.size}">There are no patientdiagnoses!</h3>
+    <table th:if="${pageOfPatientdiagnoses.content.size>0}" class="table table-hover">
+        <th>Patient Id</th>
+        <th>Diagnose Id</th>
+        <th>Patient Name</th>
+        <th>Diagnose Name</th>
+        <th></th>
+        <th></th>
+        <tr th:each="patientdiagnose : ${pageOfPatientdiagnoses.content}">
+            <td th:text="${patientdiagnose.patient.id}"></td>
+            <td th:text="${patientdiagnose.diagnose.id}"></td>
+            <td th:text="${patientdiagnose.patient.name}"></td>
+            <td th:text="${patientdiagnose.diagnose.name}"></td>
+            <td th:if="${pageOfPatientdiagnoses.content.size>1}">
+                <a class="custom-btn" 
+                    th:href="@{/patientdiagnoses/{page}/10/delete/{pId}-{dId}
+                    (page=${currentPage}, 
+                    pId=${patientdiagnose.patient.id},
+                    dId=${patientdiagnose.diagnose.id}
+                    )}">
+                    Delete
+                </a>
+            </td>
+            <td th:if="${pageOfPatientdiagnoses.content.size<2} and ${currentPage!=1}">
+                <a class="custom-btn" 
+                    th:href="@{/patientdiagnoses/{page}/10/delete/{pId}-{dId}
+                    (page=${currentPage}, 
+                    pId=${patientdiagnose.patient.id},
+                    dId=${patientdiagnose.diagnose.id}
+                    )}">
+                    Delete
+                </a>
+            </td>
+            <td th:if="${pageOfPatientdiagnoses.content.size<2} and ${currentPage==1}">
+                <a class="custom-btn" 
+                    th:href="@{/patientdiagnoses/{page}/10/delete/{pId}-{dId}
+                    (page=${currentPage}, 
+                    pId=${patientdiagnose.patient.id},
+                    dId=${patientdiagnose.diagnose.id}
+                    )}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    </table>
+    <span th:if="${pageOfPatientdiagnoses.totalPages > 0}"
+         th:each="pageNumber : ${pageNumbers}" >
+        <a th:href="@{/patientdiagnoses/{page}/{size}(page=${pageNumber}, size=${pageOfPatientdiagnoses.size})}" th:text="${pageNumber}">
+           </a>
+    </span>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
