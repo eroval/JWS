@@ -1,8 +1,11 @@
 package com.informatics.CSCB869.data.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.*;
@@ -21,4 +24,7 @@ public class Doctor extends BaseEntity{
     @NotNull
     @JoinColumn(name="profession_id", referencedColumnName = "id")
     private Profession profession;
+
+    @OneToMany
+    private List<DoctorPatientGP> gp;
 }

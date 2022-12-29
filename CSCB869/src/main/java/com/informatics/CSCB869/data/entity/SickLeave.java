@@ -20,7 +20,7 @@ public class SickLeave extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 }

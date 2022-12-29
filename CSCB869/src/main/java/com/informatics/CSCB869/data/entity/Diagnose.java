@@ -13,19 +13,18 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "profession",
+@Table(name = "diagnose",
 uniqueConstraints=@UniqueConstraint
     (
         columnNames={"name"}
     )
 )
-public class Profession extends BaseEntity {
-    
+public class Diagnose extends BaseEntity {
     @NotBlank
     @Size(min=1, max=40, message="Min 1, Max 40")
     private String name;
 
     @OneToMany
-    @JsonIgnoreProperties("profession")
-    private List<Doctor> doctors;
+    @JsonIgnoreProperties("diagnose")
+    private List<PatientDiagnose> patientdiagnose;
 }

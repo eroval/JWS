@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h4>New Diagnose</h4>
+        <form action="#" th:action="@{/diagnoses/create}" th:object="${diagnose}" method="post">
+            <div class="form-group">
+                <input class="form-control" type="text" th:field="*{name}" placeholder="Name" id="name">
+            </div>
+            <button type="submit" class="custom-btn">Create Diagnose</button>
+        </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

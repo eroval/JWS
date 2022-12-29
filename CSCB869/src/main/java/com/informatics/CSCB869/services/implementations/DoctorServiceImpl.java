@@ -2,7 +2,6 @@ package com.informatics.CSCB869.services.implementations;
 
 import com.informatics.CSCB869.data.entity.Doctor;
 import com.informatics.CSCB869.data.repository.DoctorRepository;
-import com.informatics.CSCB869.data.repository.ProfessionRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.DoctorService;
 import lombok.AllArgsConstructor;
