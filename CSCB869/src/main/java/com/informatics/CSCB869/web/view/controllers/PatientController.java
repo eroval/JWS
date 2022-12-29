@@ -70,8 +70,14 @@ public class PatientController {
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
-    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id) {
-        patientService.delete(id);
+    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        try{
+            patientService.delete(id);
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete patient.");
+            return "error-template";
+        }
         return "redirect:/patients/" + page + "/" + size;
     }
 

@@ -1,6 +1,7 @@
 package com.informatics.CSCB869.dto;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
+import com.informatics.CSCB869.data.entity.Doctor;
 import com.informatics.CSCB869.data.entity.Patient;
 
 import lombok.*;
@@ -9,8 +10,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class CreateSickLeaveDTO {
-    private LocalDate startDate;
-    private LocalDate endDate;
+public class VisitDTO {
+    private long id;
+    private LocalDate date;
+    private Doctor doctor;
     private Patient patient;
 }

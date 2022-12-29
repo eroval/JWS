@@ -97,8 +97,14 @@ public class SickLeaveController {
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
-    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id) {
-        sickLeaveService.delete(id);
+    public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        try{
+            sickLeaveService.delete(id);
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete sick leave.");
+            return "error-template";
+        }
         return "redirect:/sick-leave/" + page + "/" + size;
     }
 
@@ -113,7 +119,7 @@ public class SickLeaveController {
     @PostMapping("/{page}/{size}/update/{id}")
     public String update (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
     @Valid @ModelAttribute("sickleave") CreateSickLeaveViewModel sickleave, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || (sickleave.getEndDate().compareTo(sickleave.getStartDate())<0)) {
             return "redirect:/sick-leave/"+page+"/"+size+"/edit/"+id;
         }
         try{
