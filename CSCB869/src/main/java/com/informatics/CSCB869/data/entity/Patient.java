@@ -44,4 +44,7 @@ public class Patient extends BaseEntity{
 
     @OneToMany
     private List<Visit> visits;
+
+    @OneToMany
+    private List<Insurance> insurances;
 }

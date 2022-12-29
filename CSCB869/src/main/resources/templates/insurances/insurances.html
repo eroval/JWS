@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${pageOfInsurances} and ${pageOfInsurances.content.size}">There are no insurances!</h3>
+    <table th:if="${pageOfInsurances.content.size>0}" class="table table-hover">
+        <th>Month</th>
+        <th>Patient Id</th>
+        <th></th>
+        <tr th:each="insurance : ${pageOfInsurances.content}">
+            <td th:text="${insurance.date}"></td>
+            <td th:text="${insurance.patient.id}"></td>
+            <td th:if="${pageOfInsurances.content.size>1}"><a class="custom-btn" th:href="@{/insurance/{page}/10/delete/{date}-{id}(page=${currentPage}, date=${insurance.date},id=${insurance.patient.id})}">Delete</a></td>
+            <td th:if="${pageOfInsurances.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/insurance/{page}/10/delete/{date}-{id}(page=${currentPage}, date=${insurance.date},id=${insurance.patient.id})}">Delete</a></td>
+            <td th:if="${pageOfInsurances.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/insurance/{page}/10/delete/{date}-{id}(page=${currentPage}, date=${insurance.date},id=${insurance.patient.id})}">Delete</a></td>
+        </tr>
+    </table>
+    <span th:if="${pageOfInsurances.totalPages > 0}"
+         th:each="pageNumber : ${pageNumbers}" >
+        <a th:href="@{/insurance/{page}/{size}(page=${pageNumber}, size=${pageOfInsurances.size})}" th:text="${pageNumber}">
+           </a>
+    </span>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
