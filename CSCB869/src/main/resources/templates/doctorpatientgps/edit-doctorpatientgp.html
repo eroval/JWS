@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h4>Edit GP</h4>
+        <form action="#" th:action="@{/doctorpatientgps/{page}/{size}/update/{id} (page=${page}, size=${size} ,id=${id})}" th:object="${doctorpatientgp}" method="post">
+            <div class="form-group">
+                <select class="form-control" th:field="${doctorpatientgp.doctor}" id="doctor">
+                    <option value="">Select doctor</option>
+                    <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
+                            th:text="${doctor.id}"></option>
+                </select>
+            </div>
+            <button type="submit" class="custom-btn">Update GP</button>
+        </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

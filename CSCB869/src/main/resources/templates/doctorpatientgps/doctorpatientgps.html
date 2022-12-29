@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${pageOfDoctorpatientgps} and ${pageOfDoctorpatientgps.content.size}">There are no doctorpatientgps!</h3>
+    <table th:if="${pageOfDoctorpatientgps.content.size>0}" class="table table-hover">
+        <th>Patient Id</th>
+        <th>Doctor Id</th>
+        <th>Patient Name</th>
+        <th>Doctor Name</th>
+        <th></th>
+        <th></th>
+        <tr th:each="doctorpatientgp : ${pageOfDoctorpatientgps.content}">
+            <td th:text="${doctorpatientgp.patient.id}"></td>
+            <td th:text="${doctorpatientgp.doctor.id}"></td>
+            <td th:text="${doctorpatientgp.patient.name}"></td>
+            <td th:text="${doctorpatientgp.doctor.name}"></td>
+            <td><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/edit/{id}(page=${currentPage}, id=${doctorpatientgp.patient.id})}">Edit</a></td>
+            <td th:if="${pageOfDoctorpatientgps.content.size>1}"><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/delete/{id}(page=${currentPage}, id=${doctorpatientgp.patient.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctorpatientgps.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/delete/{id}(page=${currentPage-1}, id=${doctorpatientgp.patient.id})}">Delete</a></td>
+            <td th:if="${pageOfDoctorpatientgps.content.size<2} and ${currentPage==1}"><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/delete/{id}(page=1, id=${doctorpatientgp.patient.id})}">Delete</a></td>
+        </tr>
+    </table>
+    <span th:if="${pageOfDoctorpatientgps.totalPages > 0}"
+         th:each="pageNumber : ${pageNumbers}" >
+        <a th:href="@{/doctorpatientgps/{page}/{size}(page=${pageNumber}, size=${pageOfDoctorpatientgps.size})}" th:text="${pageNumber}">
+           </a>
+    </span>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

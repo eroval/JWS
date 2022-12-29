@@ -1,7 +1,5 @@
 package com.informatics.CSCB869.dto;
 
-import com.informatics.CSCB869.data.entity.Profession;
-
 import lombok.*;
 
 @Getter
@@ -9,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 
-public class CreateDoctorDTO {
+public class CreatePatientDTO {
     private String name;
-    private Profession profession;
+    private String egn;
 }

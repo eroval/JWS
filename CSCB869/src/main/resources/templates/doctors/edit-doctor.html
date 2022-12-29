@@ -9,7 +9,11 @@
             <div class="form-group">
                 <input class="form-control" type="text" th:field="*{name}" placeholder="Name" id="name">
                 <br>
-                <input class="form-control" type="text" th:field="*{professionId}" placeholder="Profession Id" id="professionId">
+                <select class="form-control" th:field="${doctor.profession}" id="profession">
+                    <option value="">Select</option>
+                    <option th:each="profession : ${professions}" th:value="${profession.id}"
+                            th:text="${profession.name}"></option>
+                </select>
             </div>
             <button type="submit" class="custom-btn">Update Doctor</button>
         </form>
