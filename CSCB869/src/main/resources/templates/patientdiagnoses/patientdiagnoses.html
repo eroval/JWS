@@ -17,6 +17,16 @@
             <td th:text="${patientdiagnose.diagnose.id}"></td>
             <td th:text="${patientdiagnose.patient.name}"></td>
             <td th:text="${patientdiagnose.diagnose.name}"></td>
+            <td>
+                <a class="custom-btn" 
+                    th:href="@{/patientdiagnoses/view/{pId}-{dId}
+                    ( 
+                    pId=${patientdiagnose.patient.id},
+                    dId=${patientdiagnose.diagnose.id}
+                    )}">
+                    View
+                </a>
+            </td>
             <td th:if="${pageOfPatientdiagnoses.content.size>1}">
                 <a class="custom-btn" 
                     th:href="@{/patientdiagnoses/{page}/10/delete/{pId}-{dId}

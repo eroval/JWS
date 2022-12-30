@@ -17,4 +17,7 @@ public class PatientDiagnoseViewModel {
 
     @NotNull
     private Diagnose diagnose;
+
+    @NotNull
+    private String prescription;
 }

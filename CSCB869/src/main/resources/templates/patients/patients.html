@@ -9,6 +9,8 @@
         <th>Id</th>
         <th>Patient Name</th>
         <th>Patient Egn</th>
+        <th>Assigned Diagnoses</th>
+        <th>Paid Insurancess</th>
         <th>Sick Leaves</th>
         <th></th>
         <th></th>
@@ -16,6 +18,8 @@
             <td th:text="${patient.id}"></td>
             <td th:text="${patient.name}"></td>
             <td th:text="${patient.egn}"></td>
+            <td><a class="custom-btn" th:href="@{/patientdiagnoses/patient/{id}(id=${patient.id})}">Diagnoses</a></td>
+            <td><a class="custom-btn" th:href="@{/insurance/patient/{id}(id=${patient.id})}">Paid Insurances</a></td>
             <td><a class="custom-btn" th:href="@{/sick-leave/patient/{id}(id=${patient.id})}">Sick Leaves</a></td>
             <td><a class="custom-btn" th:href="@{/patients/{page}/10/edit/{id}(page=${currentPage}, id=${patient.id})}">Edit</a></td>
             <td th:if="${pageOfPatients.content.size>1}"><a class="custom-btn" th:href="@{/patients/{page}/10/delete/{id}(page=${currentPage}, id=${patient.id})}">Delete</a></td>

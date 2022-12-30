@@ -112,6 +112,20 @@ public class InsuranceController {
         }
         return "redirect:/insurance/" + page + "/" + size;
     }
+
+    @GetMapping("/delete/{date}-{id}")
+    public String delete (@PathVariable String date, @PathVariable Long id, Model model) {
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate newDate = LocalDate.parse(date, formatter);
+            insuranceService.delete(newDate, id);
+            return "redirect:/insurance/patient/" + id;
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete insurance.");
+            return "error-template";
+        }
+    }
     
     private InsuranceViewModel convertToInsuranceViewModel(InsuranceDTO insurance) {
         return modelMapper.map(insurance, InsuranceViewModel.class);
