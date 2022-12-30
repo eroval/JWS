@@ -5,7 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${pageOfDoctorpatientgps} and ${pageOfDoctorpatientgps.content.size}">There are no doctorpatientgps!</h3>
-    <h2 th:if="${pageOfDoctorpatientgps.content.size>0}" th:text="${pageOfDoctorpatientgps.getTotalElements}"></h2>
+    <h2 th:if="${pageOfDoctorpatientgps.content.size>0}" th:text="'Total Records: ' + ${pageOfDoctorpatientgps.getTotalElements}"></h2>
     <table th:if="${pageOfDoctorpatientgps.content.size>0}" class="table table-hover">
         <th>Patient Id</th>
         <th>Doctor Id</th>
@@ -13,11 +13,13 @@
         <th>Doctor Name</th>
         <th></th>
         <th></th>
+        <th></th>
         <tr th:each="doctorpatientgp : ${pageOfDoctorpatientgps.content}">
             <td th:text="${doctorpatientgp.patient.id}"></td>
             <td th:text="${doctorpatientgp.doctor.id}"></td>
             <td th:text="${doctorpatientgp.patient.name}"></td>
             <td th:text="${doctorpatientgp.doctor.name}"></td>
+            <td><a class="custom-btn" th:href="@{/doctorpatientgps/doctor/{id}(id=${doctorpatientgp.doctor.id})}">See patients</a></td>
             <td><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/edit/{id}(page=${currentPage}, id=${doctorpatientgp.patient.id})}">Edit</a></td>
             <td th:if="${pageOfDoctorpatientgps.content.size>1}"><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/delete/{id}(page=${currentPage}, id=${doctorpatientgp.patient.id})}">Delete</a></td>
             <td th:if="${pageOfDoctorpatientgps.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/doctorpatientgps/{page}/10/delete/{id}(page=${currentPage-1}, id=${doctorpatientgp.patient.id})}">Delete</a></td>

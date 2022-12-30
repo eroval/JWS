@@ -5,7 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${insurances} and ${insurances.size()}">There are no insurances!</h3>
-    <h2 th:if="${insurances.size()>0}" th:text="${insurances.size}"></h2>
+    <h2 th:if="${insurances.size()>0}" th:text="'Total Records: ' + ${insurances.size}"></h2>
     <table th:if="${insurances.size()>0}" class="table table-hover">
         <th>Month</th>
         <th>Patient Id</th>

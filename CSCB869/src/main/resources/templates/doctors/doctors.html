@@ -5,17 +5,19 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${pageOfDoctors} and ${pageOfDoctors.content.size}">There are no doctors!</h3>
-    <h2 th:if="${pageOfDoctors.content.size>0}" th:text="${pageOfDoctors.getTotalElements}"></h2>
+    <h2 th:if="${pageOfDoctors.content.size>0}" th:text="'Total Records: ' + ${pageOfDoctors.getTotalElements}"></h2>
     <table th:if="${pageOfDoctors.content.size>0}" class="table table-hover">
         <th>Id</th>
         <th>Doctor Name</th>
         <th>Profession Name</th>
+        <th>Visits</th>
         <th></th>
         <th></th>
         <tr th:each="doctor : ${pageOfDoctors.content}">
             <td th:text="${doctor.id}"></td>
             <td th:text="${doctor.name}"></td>
             <td th:text="${doctor.profession.name}"></td>
+            <td><a class="custom-btn" th:href="@{/visits/doctor/{id}/(id=${doctor.id})}">See all visits</a></td>
             <td><a class="custom-btn" th:href="@{/doctors/{page}/10/edit/{id}(page=${currentPage}, id=${doctor.id})}">Edit</a></td>
             <td th:if="${pageOfDoctors.content.size>1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage}, id=${doctor.id})}">Delete</a></td>
             <td th:if="${pageOfDoctors.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/doctors/{page}/10/delete/{id}(page=${currentPage-1}, id=${doctor.id})}">Delete</a></td>
