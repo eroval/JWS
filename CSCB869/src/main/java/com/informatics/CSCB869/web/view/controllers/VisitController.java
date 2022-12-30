@@ -1,6 +1,8 @@
 package com.informatics.CSCB869.web.view.controllers;
 
 import com.informatics.CSCB869.data.entity.Visit;
+import com.informatics.CSCB869.data.entity.Doctor;
+import com.informatics.CSCB869.data.repository.DoctorRepository;
 import com.informatics.CSCB869.data.repository.VisitRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.DoctorService;
@@ -22,6 +24,7 @@ import java.lang.reflect.Type;
 import org.modelmapper.TypeToken;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -34,6 +37,7 @@ public class VisitController {
     
     private VisitService visitService;
     private DoctorService doctorService;
+    private DoctorRepository doctorRepository;
     private PatientService patientService;
     private final ModelMapper modelMapper;
 
@@ -62,6 +66,25 @@ public class VisitController {
         model.addAttribute("patients", patientService.getPatients());
         model.addAttribute("doctors", doctorService.getDoctors());
         return "/visits/create-visit.html";
+    }
+
+    @GetMapping("/doctor/{id}")
+    public String getByDiagnoseId(Model model, @PathVariable long id){
+        Optional<Doctor> doctor = doctorRepository.findById(id);
+        if(doctor.isEmpty()){
+            return "redirect:/doctors/1/10";
+        }
+        try{
+            final List<VisitViewModel> visits = visitService.getVisits(doctor.get())
+                    .stream()
+                    .map(this::convertToVisitViewModel)
+                    .collect(Collectors.toList());
+            model.addAttribute("visits", visits);
+            return "/visits/visits-list";
+        }
+        catch(Exception e){
+            return "redirect:/doctors/1/10";
+        }
     }
     
     @PostMapping("/create")

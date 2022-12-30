@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${doctorpatientgps} and ${doctorpatientgps.size()}">There are no gps</h3>
+    <h2 th:if="${doctorpatientgps.size()>0}" th:text="'Total Records: ' + ${doctorpatientgps.size}"></h2>
+    <table th:if="${doctorpatientgps.size()>0}" class="table table-hover">
+        <th>Patient Id</th>
+        <th>Doctor Id</th>
+        <th>Patient Name</th>
+        <th>Doctor Name</th>
+        <tr th:each="doctorpatientgp : ${doctorpatientgps}">
+            <td th:text="${doctorpatientgp.patient.id}"></td>
+            <td th:text="${doctorpatientgp.doctor.id}"></td>
+            <td th:text="${doctorpatientgp.patient.name}"></td>
+            <td th:text="${doctorpatientgp.doctor.name}"></td>
+        </tr>
+    </table>
+    </div>
+    <footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

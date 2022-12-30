@@ -1,7 +1,9 @@
 package com.informatics.CSCB869.web.view.controllers;
 
+import com.informatics.CSCB869.data.entity.Doctor;
 import com.informatics.CSCB869.data.entity.DoctorPatientGP;
 import com.informatics.CSCB869.data.repository.DoctorPatientGPRepository;
+import com.informatics.CSCB869.data.repository.DoctorRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.DoctorPatientGPService;
 import com.informatics.CSCB869.services.DoctorService;
@@ -24,6 +26,7 @@ import org.modelmapper.TypeToken;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,6 +39,7 @@ public class DoctorPatientGPController {
     
     private DoctorPatientGPService doctorpatientgpService;
     private DoctorService doctorService;
+    private DoctorRepository doctorRepository;
     private PatientService patientService;
     private final ModelMapper modelMapper;
 
@@ -77,6 +81,26 @@ public class DoctorPatientGPController {
         }
         doctorpatientgpService.create(modelMapper.map(doctorpatientgp, DoctorPatientGPDTO.class));
         return "redirect:/doctorpatientgps/1/10";
+    }
+
+    
+    @GetMapping("/doctor/{id}")
+    public String getGpByDoctorId(Model model, @PathVariable long id){
+        Optional<Doctor> doctor = doctorRepository.findById(id);
+        if(doctor.isEmpty()){
+            return "redirect:/patients/1/10";
+        }
+        try{
+            final List<DoctorPatientGPViewModel> doctorpatientgps = doctorpatientgpService.getDoctorPatientGPDTO(doctor.get())
+                    .stream()
+                    .map(this::convertToDoctorPatientGPViewModel)
+                    .collect(Collectors.toList());
+            model.addAttribute("doctorpatientgps", doctorpatientgps);
+            return "/doctorpatientgps/doctorpatientgps-list";
+        }
+        catch(Exception e){
+            return "redirect:/patients/1/10";
+        }
     }
 
     @GetMapping("/{page}/{size}/delete/{id}")
