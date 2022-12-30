@@ -5,6 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${pageOfDoctorpatientgps} and ${pageOfDoctorpatientgps.content.size}">There are no doctorpatientgps!</h3>
+    <h2 th:if="${pageOfDoctorpatientgps.content.size>0}" th:text="${pageOfDoctorpatientgps.getTotalElements}"></h2>
     <table th:if="${pageOfDoctorpatientgps.content.size>0}" class="table table-hover">
         <th>Patient Id</th>
         <th>Doctor Id</th>

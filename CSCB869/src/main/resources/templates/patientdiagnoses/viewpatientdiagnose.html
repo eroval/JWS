@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${patientdiagnose}">There is no information</h3>
+    <div th:if="${patientdiagnose}" class="content">
+        <table class="table table-hover" style="margin-bottom: 4rem;">
+            <th>Patient Id</th>
+            <th>Diagnose Id</th>
+            <th>Patient Name</th>
+            <th>Diagnose Name</th>
+            <tr>
+                <td th:text="${patientdiagnose.patient.id}"></td>
+                <td th:text="${patientdiagnose.diagnose.id}"></td>
+                <td th:text="${patientdiagnose.patient.name}"></td>
+                <td th:text="${patientdiagnose.diagnose.name}"></td>
+            </tr>
+        </table>
+        <table class="table table-hover">
+            <th>Prescription</th>
+            <tr>
+                <td th:text="${patientdiagnose.prescription}"></td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

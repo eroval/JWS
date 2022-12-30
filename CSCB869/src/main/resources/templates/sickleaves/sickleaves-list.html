@@ -5,6 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${sickleaves} and ${sickleaves.size()}">There are no sickleaves!</h3>
+    <h2 th:if="${sickleaves.size()>0}" th:text="${sickleaves.size}"></h2>
     <table th:if="${sickleaves.size()>0}" class="table table-hover">
         <th>Id</th>
         <th>From</th>
@@ -17,7 +18,7 @@
             <td th:text="${sickleave.startDate}"></td>
             <td th:text="${sickleave.endDate}"></td>
             <td th:text="${sickleave.patient.id}"></td>
-            <td><a class="custom-btn" th:href="@{'/sick-leave/edit-sickleave/'+${sickleave.id}}">Edit</a></td>
+            <td><a class="custom-btn" th:href="@{'/sick-leave/edit/'+${sickleave.id}}">Edit</a></td>
             <td><a class="custom-btn" th:href="@{'/sick-leave/delete/'+${sickleave.id}}">Delete</a></td>
         </tr>
     </table>

@@ -13,4 +13,5 @@ import lombok.*;
 public class PatientDiagnoseDTO {
     private Patient patient;
     private Diagnose diagnose;
+    private String prescription;
 }

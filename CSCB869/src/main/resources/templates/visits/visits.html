@@ -5,6 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${pageOfVisits} and ${pageOfVisits.content.size}">There are no visits!</h3>
+    <h2 th:if="${pageOfVisits.content.size>0}" th:text="${pageOfVisits.getTotalElements}"></h2>
     <table th:if="${pageOfVisits.content.size>0}" class="table table-hover">
         <th>Id</th>
         <th>Date</th>

@@ -5,6 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${insurances} and ${insurances.size()}">There are no insurances!</h3>
+    <h2 th:if="${insurances.size()>0}" th:text="${insurances.size}"></h2>
     <table th:if="${insurances.size()>0}" class="table table-hover">
         <th>Month</th>
         <th>Patient Id</th>
@@ -12,7 +13,10 @@
         <tr th:each="insurance : ${insurances}">
             <td th:text="${insurance.date}"></td>
             <td th:text="${insurance.patient.id}"></td>
-            <td><a class="custom-btn" th:href="@{'/insurance/delete/'+${insurance.id}}">Delete</a></td>
+            <td><a class="custom-btn" th:href="@{'/insurance/delete/{dId}-{pId}'(
+                dId=${insurance.date},
+                pId=${insurance.patient.id}
+                )}">Delete</a></td>
         </tr>
     </table>
     </div>

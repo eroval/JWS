@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container justify-content-center">
+    <h3 th:unless="${patientdiagnoses} and ${patientdiagnoses.size()}">There are no diagnoses</h3>
+    <h2 th:if="${patientdiagnoses.size()>0}" th:text="${patientdiagnoses.size}"></h2>
+    <table th:if="${patientdiagnoses.size()>0}" class="table table-hover">
+        <th>Patient Id</th>
+        <th>Diagnose Id</th>
+        <th>Patient Name</th>
+        <th>Diagnose Name</th>
+        <th></th>
+        <tr th:each="patientdiagnose : ${patientdiagnoses}">
+            <td th:text="${patientdiagnose.patient.id}"></td>
+            <td th:text="${patientdiagnose.diagnose.id}"></td>
+            <td th:text="${patientdiagnose.patient.name}"></td>
+            <td th:text="${patientdiagnose.diagnose.name}"></td>
+            <td>
+                <a class="custom-btn" 
+                    th:href="@{/patientdiagnoses/view/{pId}-{dId}
+                    ( 
+                    pId=${patientdiagnose.patient.id},
+                    dId=${patientdiagnose.diagnose.id}
+                    )}">
+                    View
+                </a>
+            </td>
+            <td>
+                <a class="custom-btn" 
+                    th:href="@{/patientdiagnoses/delete/{pId}-{dId}
+                    ( 
+                    pId=${patientdiagnose.patient.id},
+                    dId=${patientdiagnose.diagnose.id}
+                    )}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

@@ -96,6 +96,55 @@ public class SickLeaveController {
         return "redirect:/sick-leave/1/10";
     }
 
+    @GetMapping("/{page}/{size}/edit/{id}")
+    public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
+        model.addAttribute("sickleave", modelMapper.map(sickLeaveService.getSickLeave(id),
+        CreateSickLeaveViewModel.class));
+        model.addAttribute("patients", patientService.getPatients());
+        return "/sickleaves/edit-sickleave";
+    }
+    
+    @PostMapping("/{page}/{size}/update/{id}")
+    public String update (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
+    @Valid @ModelAttribute("sickleave") CreateSickLeaveViewModel sickleave, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors() || (sickleave.getEndDate().compareTo(sickleave.getStartDate())<0)) {
+            return "redirect:/sick-leave/"+page+"/"+size+"/edit/"+id;
+        }
+        try{
+            sickLeaveService.update(id, modelMapper.map(sickleave,CreateSickLeaveDTO.class));
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't update sick leave.");
+            return "error-template";
+        }
+        return "redirect:/sick-leave/"+page+"/"+size;
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editList (@PathVariable Long id, Model model) {
+        model.addAttribute("sickleave", modelMapper.map(sickLeaveService.getSickLeave(id),
+        CreateSickLeaveViewModel.class));
+        model.addAttribute("patients", patientService.getPatients());
+        return "/sickleaves/edit-sickleave-list";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateList (@PathVariable Long id, 
+    @Valid @ModelAttribute("sickleave") CreateSickLeaveViewModel sickleave, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors() || (sickleave.getEndDate().compareTo(sickleave.getStartDate())<0)) {
+            return "redirect:/sick-leave/edit/"+id;
+        }
+        try{
+            long patientId = sickleave.getPatient().getId();
+            sickLeaveService.update(id, modelMapper.map(sickleave,CreateSickLeaveDTO.class));
+            return "redirect:/sick-leave/patient/"+patientId;
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't update sick leave.");
+            return "error-template";
+        }
+    }
+
     @GetMapping("/{page}/{size}/delete/{id}")
     public String delete (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
         try{
@@ -108,30 +157,19 @@ public class SickLeaveController {
         return "redirect:/sick-leave/" + page + "/" + size;
     }
 
-    @GetMapping("/{page}/{size}/edit/{id}")
-    public String edit (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, Model model) {
-        model.addAttribute("sickleave", modelMapper.map(sickLeaveService.getSickLeave(id),
-        CreateSickLeaveViewModel.class));
-        model.addAttribute("patients", patientService.getPatients());
-        return "/sickleaves/edit-sickleave";
+    @GetMapping("/delete/{id}")
+    public String delete (@PathVariable Long id, Model model) {
+        try{
+            long patientId=sickLeaveService.getSickLeave(id).getPatient().getId();
+            sickLeaveService.delete(id);
+            return "redirect:/sick-leave/patient/"+patientId;
+        }
+        catch(Exception e){
+            model.addAttribute("message", "Couldn't delete sick leave.");
+            return "error-template";
+        }
     }
 
-    @PostMapping("/{page}/{size}/update/{id}")
-    public String update (@PathVariable Long page, @PathVariable Long size, @PathVariable Long id, 
-    @Valid @ModelAttribute("sickleave") CreateSickLeaveViewModel sickleave, BindingResult bindingResult) {
-        if (bindingResult.hasErrors() || (sickleave.getEndDate().compareTo(sickleave.getStartDate())<0)) {
-            return "redirect:/sick-leave/"+page+"/"+size+"/edit/"+id;
-        }
-        try{
-            sickLeaveService.update(id, modelMapper.map(sickleave,CreateSickLeaveDTO.class));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-        return "redirect:/sick-leave/"+page+"/"+size;
-    }
-    
     private SickLeaveViewModel convertToSickLeaveViewModel(SickLeaveDTO sickleave) {
         return modelMapper.map(sickleave, SickLeaveViewModel.class);
     }

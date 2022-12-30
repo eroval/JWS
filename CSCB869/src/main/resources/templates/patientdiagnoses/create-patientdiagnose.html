@@ -16,8 +16,10 @@
                 <select class="form-control" th:field="${patientdiagnose.diagnose}" id="diagnose">
                     <option value="">Select diagnose</option>
                     <option th:each="diagnose : ${diagnoses}" th:value="${diagnose.id}"
-                            th:text="${diagnose.id}"></option>
+                            th:text="${diagnose.name}"></option>
                 </select>
+                <br> 
+                <input class="form-control" type="text" th:field="*{prescription}" placeholder="Prescription" id="prescription">
             </div>
             <button type="submit" class="custom-btn">Create</button>
         </form>
