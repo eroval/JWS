@@ -5,7 +5,7 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${sickleaves} and ${sickleaves.size()}">There are no sickleaves!</h3>
-    <h2 th:if="${sickleaves.size()>0}" th:text="${sickleaves.size}"></h2>
+    <h2 th:if="${sickleaves.size()>0}" th:text="'Total Records: ' + ${sickleaves.size}"></h2>
     <table th:if="${sickleaves.size()>0}" class="table table-hover">
         <th>Id</th>
         <th>From</th>

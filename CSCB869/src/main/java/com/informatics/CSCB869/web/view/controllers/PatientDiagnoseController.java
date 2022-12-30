@@ -1,6 +1,8 @@
 package com.informatics.CSCB869.web.view.controllers;
 
+import com.informatics.CSCB869.data.entity.Diagnose;
 import com.informatics.CSCB869.data.entity.Patient;
+import com.informatics.CSCB869.data.repository.DiagnoseRepository;
 import com.informatics.CSCB869.data.repository.PatientRepository;
 import com.informatics.CSCB869.dto.*;
 import com.informatics.CSCB869.services.DiagnoseService;
@@ -35,6 +37,7 @@ public class PatientDiagnoseController {
     private PatientDiagnoseService patientDiagnoseService;
     private DiagnoseService diagnoseService;
     private PatientService patientService;
+    private DiagnoseRepository diagnoseRepository;
     private PatientRepository patientRepository;
     private final ModelMapper modelMapper;
 
@@ -78,6 +81,25 @@ public class PatientDiagnoseController {
         return "redirect:/patientdiagnoses/1/10";
     }
     
+    @GetMapping("/diagnose/{id}")
+    public String getByDiagnoseId(Model model, @PathVariable long id){
+        Optional<Diagnose> diagnose = diagnoseRepository.findById(id);
+        if(diagnose.isEmpty()){
+            return "redirect:/patients/1/10";
+        }
+        try{
+            final List<PatientDiagnoseViewModel> patientdiagnoses = patientDiagnoseService.getPatientDiagnose(diagnose.get())
+                    .stream()
+                    .map(this::convertToPatientDiagnoseViewModel)
+                    .collect(Collectors.toList());
+            model.addAttribute("patientdiagnoses", patientdiagnoses);
+            return "/patientdiagnoses/patientdiagnoses-list";
+        }
+        catch(Exception e){
+            return "redirect:/patients/1/10";
+        }
+    }
+
     @GetMapping("/patient/{id}")
     public String getSickLeaveByPatientId(Model model, @PathVariable long id){
         Optional<Patient> patient = patientRepository.findById(id);

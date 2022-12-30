@@ -5,15 +5,17 @@
 <header th:replace="fragments :: header"></header>
 <div class="container justify-content-center">
     <h3 th:unless="${pageOfDiagnoses} and ${pageOfDiagnoses.content.size}">There are no diagnoses!</h3>
-    <h2 th:if="${pageOfDiagnoses.content.size>0}" th:text="${pageOfDiagnoses.getTotalElements}"></h2>
+    <h2 th:if="${pageOfDiagnoses.content.size>0}" th:text="'Total Records: ' + ${pageOfDiagnoses.getTotalElements}"></h2>
     <table th:if="${pageOfDiagnoses.content.size>0}" class="table table-hover">
         <th>Id</th>
         <th>Diagnose Name</th>
         <th></th>
         <th></th>
+        <th></th>
         <tr th:each="diagnose : ${pageOfDiagnoses.content}">
             <td th:text="${diagnose.id}"></td>
             <td th:text="${diagnose.name}"></td>
+            <td><a class="custom-btn" th:href="@{/patientdiagnoses/diagnose/{id}(id=${diagnose.id})}">Linked Patients</a></td>
             <td><a class="custom-btn" th:href="@{/diagnoses/{page}/10/edit/{id}(page=${currentPage}, id=${diagnose.id})}">Edit</a></td>
             <td th:if="${pageOfDiagnoses.content.size>1}" ><a class="custom-btn" th:href="@{/diagnoses/{page}/10/delete/{id}(page=${currentPage}, id=${diagnose.id})}">Delete</a></td>
             <td th:if="${pageOfDiagnoses.content.size<2} and ${currentPage!=1}"><a class="custom-btn" th:href="@{/diagnoses/{page}/10/delete/{id}(page=${currentPage-1}, id=${diagnose.id})}">Delete</a></td>
