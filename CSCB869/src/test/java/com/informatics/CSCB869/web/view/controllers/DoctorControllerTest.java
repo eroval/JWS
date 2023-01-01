@@ -11,17 +11,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.informatics.CSCB869.dto.CreateProfessionDTO;
-import com.informatics.CSCB869.services.ProfessionService;
+import com.informatics.CSCB869.dto.CreateDoctorDTO;
+import com.informatics.CSCB869.services.DoctorService;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ProfessionController.class)
-class ProfessionControllerTest {
+@WebMvcTest(DoctorController.class)
+class DoctorControllerTest {
     
     @MockBean
-    private ProfessionService professionService;
+    private DoctorService doctorService;
 
     @MockBean
     private ModelMapper modelMapper;
@@ -30,8 +30,8 @@ class ProfessionControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void getProfessions() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/1/10"))
+    void getDoctors() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/doctors/1/10"))
                 .andExpect(status().isOk());
     }
 }
